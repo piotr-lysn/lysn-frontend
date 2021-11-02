@@ -1,0 +1,9 @@
+{
+  "name": "@lysn/lysn-frontend",
+  "packageManager": "yarn@3.1.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
