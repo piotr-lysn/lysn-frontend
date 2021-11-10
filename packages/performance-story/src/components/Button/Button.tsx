@@ -1,2 +1,45 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import MuiButton from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+
+const Button = ({
+  onClick,
+  children,
+  isLoading,
+  type,
+  color,
+  size,
+  fullWidth,
+}: {
+  onClick: (ev: React.ClickEvent<HTMLInputElement>) => void,
+  children: Node,
+  isLoading: boolean,
+  type: string,
+  color: string,
+  size: string,
+  fullWidth: boolean,
+}) => {
+  return (
+    <MuiButton
+      onClick={onClick}
+      type={type}
+      color={color}
+      size={size}
+      fullWidth={fullWidth}
+      variant={'contained'}
+      sx={{
+        '&.MuiButton-sizeLarge': {
+          py: 4,
+          px: 31,
+        }
+      }}
+    >
+      {isLoading
+        ? <CircularProgress color={'inherit'} />
+        : children
+      }
+    </MuiButton>
+  )
+}
+
+export default Button;

@@ -1,46 +1,20 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Image from 'next/image'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Box from '@mui/material/Box';
-import MuiTextField from '@mui/material/TextField';
-import MuiButton from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
-
-
-const InputField = ({ name, label }) => {
-  return (
-    <Box>
-      <Field name={name}>
-        {({ form, field }) => console.log(form, field) || (
-          <MuiTextField
-            variant={'outlined'}
-            fullWidth
-            label={label}
-            disabled={form.isSubmitting}
-            value={field.value}
-            onChange={event => form.setFieldValue(field.name, event.target.value)}
-          />
-        )}
-      </Field>
-      <ErrorMessage name={name}>
-        {msg => <Box bgcolor={'red'}>{msg}</Box>}
-      </ErrorMessage>
-    </Box>
-  );
-}
-
-const Button = ({ children, isLoading, ...rest}) => {
-  return (
-    <MuiButton variant={'outlined'} {...rest}>
-      {isLoading
-        ? <CircularProgress />
-        : children
-      }
-    </MuiButton>
-  )
-}
+import InputField from '../src/components/InputField';
+import Button from '../src/components/Button';
+import UnorderedList from '../src/components/UnorderedList';
+import Text from '../src/components/Text';
+import Logo1 from '../public/logo/logo1.png';
+import Logo2 from '../public/logo/logo2.svg';
+import BackgroundImageHeader from '../public/images/backgroundImageHeader.png';
+import BackgroundImageContent from '../public/images/backgroundImageContent.jpg';
+import { styled } from '@mui/system';
 
 const ContactForm = () => {
   return (
@@ -61,27 +35,27 @@ const ContactForm = () => {
      >
        {({ isSubmitting }) => (
          <Form>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <InputField name={'name'} label={'Name'} />
-            </Grid>
-            <Grid item xs={12}>
-              <InputField name={'phone'} label={'Phone Number'} />
-            </Grid>
-            <Grid item xs={12}>
-              <InputField name={'email'} label={'Email Address'} />
-            </Grid>
-            <Grid item xs={12}>
-              <InputField name={'companyName'} label={'Company Name'} />
-            </Grid>
-            <Grid item xs={12}>
-              <InputField name={'position'} label={'Position'} />
-            </Grid>
-            <Grid item xs={12}>
-              <Button type={'submit'} size={'large'} fullWidth isLoading={isSubmitting}>
-                Submit
-              </Button>
-            </Grid>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <InputField name={'name'} label={'Name'} />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField name={'phone'} label={'Phone Number'} />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField name={'email'} label={'Email Address'} />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField name={'companyName'} label={'Company Name'} />
+              </Grid>
+              <Grid item xs={12}>
+                <InputField name={'position'} label={'Position'} />
+              </Grid>
+              <Grid item xs={12}>
+                <Button type={'submit'} color={'primary'} size={'large'} fullWidth isLoading={isSubmitting}>
+                  Submit
+                </Button>
+              </Grid>
           </Grid>
          </Form>
        )}
@@ -89,32 +63,141 @@ const ContactForm = () => {
   );
 }
 
+const Header = () => {
+  return (
+    <>
+      <Box
+        display={'flex'}
+        justifyContent={'space-between'}
+        sx={{
+           bgcolor: 'background.background3',
+           py: 2,
+           pl: 17.5,
+        }}
+      >
+        <Image src={Logo1} />
+      </Box>
+      <Box
+        component={'header'}
+        display={'flex'}
+        flexDirection={'column'}
+        alignItems={'center'}
+        justifyContent={'center'}
+        sx={{
+          background: `url('${BackgroundImageHeader.src}')`,
+          paddingTop: 79,
+          paddingBottom: 62,
+        }}
+      >
+        <Text variant={'h2'} font={'secondary'} textAlign={'center'}>
+          Welcome to the Future
+        </Text>
+        <Text variant={'h1'} font={'secondary'} textAlign={'center'}>
+          A new generation in executive psychology
+        </Text>
+        <Box pt={15} pb={2}>
+          <Text variant={'caption'}>
+            Sign up to our Beta
+          </Text>
+        </Box>
+        <Button
+          color={'primary'}
+          size={'large'}
+          onClick={() => {
+            // document.getElementsByName(name)[0]
+           const elem =  document.querySelector('[name="name"]');
+           if (elem) {
+            elem.scrollIntoView({ 
+              behavior: 'smooth' 
+            });
+            elem.focus({ preventScroll: true });
+           }
+          }}
+        >
+          Contact us
+        </Button>
+      </Box>
+    </>
+  );
+}
+
+const Footer = () => (
+  <Box
+    component={'footer'}
+    display={'flex'}
+    justifyContent={'space-between'}
+    sx={{
+      bgcolor: 'background.background3',
+      height: '64px',
+      fill: 'primary.contrastText',
+      padding: 2,
+    }}
+  >
+    <Box></Box>
+    <Image src={Logo2} />
+    <Box></Box>
+  </Box>
+);
+
+
+const Main = () => (
+  <Grid
+    component={'main'}
+    container
+    columnSpacing={0}
+    p={[5, 10, 20]}
+    sx={{
+      background: `url('${BackgroundImageContent.src}')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center -300px',
+    }}
+  >
+    <Grid item xs={12} mb={[5, 10, 20]}>
+      <Text variant={'h2'} font={'secondary'} fontWeight={'700'}>
+        Sign up for our beta now.
+      </Text>
+    </Grid>
+
+    <Grid item xs={12} md={5}>
+      <Paper sx={{ bgcolor: 'background.background2', padding: [6, 8, 12.5] }}>
+        <ContactForm />
+      </Paper>
+    </Grid>
+
+    <Grid item xs={12} md={7} pl={[0, 0, 9]} mt={[10, 10, 0]}>
+      <Box>
+        <Text variant={'body1'} font={'secondary'} fontWeight={'700'}>
+          Bringing together the spectrum of high performance and mental health for the world's leaders and professionals.
+        </Text>
+        <UnorderedList
+          items={['Psychology', 'Coaching', 'Leadership Profiling', 'High Performance']}
+        />
+      </Box>
+
+      <Box>
+        <Text variant={'body1'} font={'secondary'} fontWeight={'700'}>
+          Our leadership team
+        </Text>
+        <UnorderedList
+          items={[
+            'Peta Slocombe, CEO/Psychologist',
+            'Kate Bennett Eriksson, Global Digital Health Tech',
+            'A DaneWell Health Company Channel partners with Peter Berry Consulting and Hogan Assessment Systems, Clinicom, and supported by APACS best Coaches and Psychologists'
+          ]}
+        />
+      </Box>
+
+    </Grid>
+  </Grid>
+);
+
 
 const Home: NextPage = () => {
   return (
     <div>
-      <Box component={'header'} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-        <Typography>
-          Welcome to the Future
-        </Typography>
-        <Typography>
-          A new generation in executive psychology
-        </Typography>
-      </Box>
-      <Box component={'main'} p={4}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ borderRadius: '10px', bgcolor: 'primary' }}>
-              <ContactForm />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            CONTENT
-          </Grid>
-        </Grid>
-      </Box>
-      <Box component={'footer'}>
-      </Box>
+      <Header />    
+      <Main />
+      <Footer />
     </div>
   )
 }

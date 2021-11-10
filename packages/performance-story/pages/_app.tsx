@@ -16,8 +16,8 @@ export default function MyApp(props) {
       <Head>
         <title>Performance Story</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <meta name="description" content="Performance Story" />
-        <meta name="keywords" content="executive,psychology" />
+        <meta name="description" content="Performance Story brings together the spectrum of high performance coaching, psychology and mental health for the world's leaders and professionals, leveraging technology to deliver an on-demand, deeply human experiences. Sign up for our Beta today." />
+        <meta name="keywords" content="Executive Psychology,High Performance,Coaching,Business Coaching,Psychology,Leadership Profiling,Mental Health" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeProvider theme={theme}>
