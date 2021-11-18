@@ -27,12 +27,7 @@ const Button = ({
       size={size}
       fullWidth={fullWidth}
       variant={'contained'}
-      sx={{
-        '&.MuiButton-sizeLarge': {
-          py: 4,
-          px: 31,
-        }
-      }}
+      disabled={isLoading}
     >
       {isLoading
         ? <CircularProgress color={'inherit'} />

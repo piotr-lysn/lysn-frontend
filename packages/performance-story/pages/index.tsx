@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import InputField from '../src/components/InputField';
 import Button from '../src/components/Button';
 import UnorderedList from '../src/components/UnorderedList';
+import { useSnackbar } from '../src/components/Snackbar';
 import Text from '../src/components/Text';
 import Logo1 from '../public/logo/logo1.png';
 import Logo2 from '../public/logo/logo2.svg';
@@ -17,20 +18,29 @@ import BackgroundImageContent from '../public/images/backgroundImageContent.jpg'
 import { styled } from '@mui/system';
 
 const ContactForm = () => {
+  const { enqueueSnackbar } = useSnackbar();
   return (
     <Formik
        initialValues={{
-         name: '',
+         name: 'Name',
          phone: '',
          email: '',
          companyName: '',
          position: '',
         }}
-       onSubmit={(values, { setSubmitting }) => {
-         setTimeout(() => {
-           alert(JSON.stringify(values, null, 2));
+       onSubmit={async (values, { setSubmitting }) => {
+         try {
+          await fetch('https://localhost:8000/v1/api/clients/performance-story-request/', {
+            method: 'POST',
+            body: values,
+          });
+           enqueueSnackbar("We've received your enquiry and we will be in touch with you shortly.", { variant: 'error' });
+         } catch (e) {
+           enqueueSnackbar('Something went wrong. Refresh the page or try again later.', { variant: 'error' });
+           console.log('error', e);
+         } finally {
            setSubmitting(false);
-         }, 400);
+         }
        }}
      >
        {({ isSubmitting }) => (

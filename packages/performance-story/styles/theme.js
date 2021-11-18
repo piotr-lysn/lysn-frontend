@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes, darken } from "@mui/material/styles";
 
 let theme = createTheme({
   spacing: 4,
@@ -21,6 +21,7 @@ let theme = createTheme({
     },
     text: {
       primary: '#FFFFFF',
+      disabled: darken('#E1E1E1', 0.5),
     }
   },
   shape: {
@@ -59,6 +60,9 @@ let theme = createTheme({
       textTransform: 'none',
     },
   },
+});
+
+theme = createTheme(theme, {
   components: {
     MuiCssBaseline: {
       styleOverrides: `
@@ -81,6 +85,50 @@ let theme = createTheme({
           font-style: normal;
         }
       `,
+    },
+    MuiButton: {
+      styleOverrides: {
+        containedSizeLarge: {
+          padding: theme.spacing(4, 31, 4, 31),
+        },
+        root: {
+          '&.Mui-disabled': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: theme.palette.primary.contrastText2,
+
+          '&.Mui-disabled': {
+            color: darken(theme.palette.primary.contrastText2, 0.5),
+          },
+          '&.Mui-focused': {
+            color: theme.palette.primary.contrastText2,
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          color: theme.palette.primary.contrastText2,
+          backgroundColor: theme.palette.background.input.primary,
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.primary.main,
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.primary.main,
+          },
+          '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.primary.dark,
+          },
+        },
+      },
     },
   },
 });
