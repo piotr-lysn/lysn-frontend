@@ -5,6 +5,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { styled } from '@mui/system';
+import * as yup from 'yup';
 import Typography from '@mui/material/Typography';
 import InputField from '../src/components/InputField';
 import Button from '../src/components/Button';
@@ -15,24 +17,41 @@ import Logo1 from '../public/logo/logo1.png';
 import Logo2 from '../public/logo/logo2.svg';
 import BackgroundImageHeader from '../public/images/backgroundImageHeader.png';
 import BackgroundImageContent from '../public/images/backgroundImageContent.jpg';
-import { styled } from '@mui/system';
+
+
+const phoneRegExp = /^(?:\+?(61))? ?(?:\((?=.*\)))?(0?[2-57-8])\)? ?(\d\d(?:[- ](?=\d{3})|(?!\d\d[- ]?\d[- ]))\d\d[- ]?\d[- ]?\d{3})$/;
+const validationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required('This field is required'),
+  phone: yup.string()
+    .matches(phoneRegExp, 'Phone number is not valid')
+    .required('This field is required'),
+  email: yup
+    .string()
+    .email("This doesn't look like a valid email")
+    .required('This field is required'),
+  companyName: yup.string(),
+  position: yup.string(),
+});
 
 const ContactForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   return (
     <Formik
        initialValues={{
-         name: 'Name',
+         name: '',
          phone: '',
          email: '',
          companyName: '',
          position: '',
         }}
+      validationSchema={validationSchema}
        onSubmit={async (values, { setSubmitting }) => {
          try {
           await fetch('https://localhost:8000/v1/api/clients/performance-story-request/', {
             method: 'POST',
-            body: values,
+            body: JSON.stringify(values),
           });
            enqueueSnackbar("We've received your enquiry and we will be in touch with you shortly.", { variant: 'error' });
          } catch (e) {

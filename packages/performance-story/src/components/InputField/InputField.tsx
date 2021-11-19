@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Field, ErrorMessage } from 'formik';
+import Text from '../Text';
 
 const InputField = ({ name, label }: { name: string, label: string }) => {
   return (
@@ -19,12 +20,11 @@ const InputField = ({ name, label }: { name: string, label: string }) => {
             onChange={event => form.setFieldValue(name, event.target.value)}
             variant={'outlined'}
             color={'primary'}
+            error={Boolean(form.errors[name])}
+            helperText={form.errors[name]}
           />
         )}
       </Field>
-      <ErrorMessage name={name}>
-        {msg => <Box bgcolor={'red'}>{msg}</Box>}
-      </ErrorMessage>
     </Box>
   );
 }
